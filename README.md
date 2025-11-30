@@ -23,7 +23,7 @@ Mobile application for retrieving information about 42 students through 42 API u
 
 ### 2. Configure OAuth2 Credentials
 
-Create a `local.properties` file in the project root (already added to `.gitignore`):
+Create a `local.properties` file in the project root
 
 ```properties
 API_UID=your_client_id_here
