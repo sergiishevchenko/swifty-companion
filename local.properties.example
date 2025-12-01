@@ -1,0 +1,4 @@
+API_UID=your_client_id_here
+API_SECRET=your_client_secret_here
+API_REDIRECT_URI=students42://oauth/callback
+API_BASE_URL=https://api.intra.42.fr
