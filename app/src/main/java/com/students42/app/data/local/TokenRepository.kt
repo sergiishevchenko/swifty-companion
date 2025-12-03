@@ -57,7 +57,7 @@ class TokenRepository(private val context: Context) {
         val expiresAt = context.dataStore.data.map { preferences ->
             preferences[tokenExpiresAtKey]
         }.first()
-        
+
         return expiresAt != null && expiresAt < System.currentTimeMillis()
     }
 

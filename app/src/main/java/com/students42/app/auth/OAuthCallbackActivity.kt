@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class OAuthCallbackActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContent {
             MaterialTheme {
                 Box(

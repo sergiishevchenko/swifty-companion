@@ -1,12 +1,12 @@
 package com.students42.app.utils
 
 import android.content.Context
+import com.google.gson.JsonSyntaxException
 import com.students42.app.R
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import com.google.gson.JsonSyntaxException
 
 object ErrorHandler {
     fun handleError(context: Context, throwable: Throwable): String {

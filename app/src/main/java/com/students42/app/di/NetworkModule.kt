@@ -1,11 +1,11 @@
 package com.students42.app.di
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.students42.app.data.api.ApiService
 import com.students42.app.data.api.AuthInterceptor
 import com.students42.app.data.local.TokenRepository
 import com.students42.app.utils.Constants
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

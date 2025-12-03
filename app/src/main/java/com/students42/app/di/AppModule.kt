@@ -1,9 +1,9 @@
 package com.students42.app.di
 
 import android.content.Context
+import com.students42.app.data.api.ApiService
 import com.students42.app.data.local.TokenRepository
 import com.students42.app.data.repositories.UserRepository
-import com.students42.app.data.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
