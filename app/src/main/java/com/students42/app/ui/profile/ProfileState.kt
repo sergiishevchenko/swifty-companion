@@ -11,5 +11,5 @@ sealed class ProfileState {
         val skills: List<SkillModel>,
         val projects: List<ProjectModel>
     ) : ProfileState()
-    data class Error(val message: String) : ProfileState()
+    data class Error(val message: String, val retryAction: (() -> Unit)? = null) : ProfileState()
 }

@@ -31,6 +31,8 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
+    private var lastSearchLogin: String? = null
+
     init {
         checkToken()
     }
@@ -46,14 +48,22 @@ class LoginViewModel @Inject constructor(
 
     fun searchUser(login: String) {
         if (login.isBlank()) {
-            _loginState.value = LoginState.Error(context.getString(R.string.error_unknown))
+            _loginState.value = LoginState.Error(
+                context.getString(R.string.error_unknown),
+                null
+            )
             return
         }
 
+        lastSearchLogin = login.trim()
+        performSearch(lastSearchLogin!!)
+    }
+
+    private fun performSearch(login: String) {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
 
-            userRepository.getUserInfo(login.trim()).collect { result ->
+            userRepository.getUserInfo(login).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         _loginState.value = LoginState.Loading
@@ -63,10 +73,19 @@ class LoginViewModel @Inject constructor(
                     }
                     is Result.Error -> {
                         val errorMessage = ErrorHandler.handleError(context, result.exception)
-                        _loginState.value = LoginState.Error(errorMessage)
+                        _loginState.value = LoginState.Error(
+                            errorMessage,
+                            retryAction = { performSearch(login) }
+                        )
                     }
                 }
             }
+        }
+    }
+
+    fun retry() {
+        lastSearchLogin?.let { login ->
+            performSearch(login)
         }
     }
 
@@ -85,7 +104,10 @@ class LoginViewModel @Inject constructor(
                 }
                 is Result.Error -> {
                     val errorMessage = ErrorHandler.handleError(context, result.exception)
-                    _loginState.value = LoginState.Error(errorMessage)
+                    _loginState.value = LoginState.Error(
+                        errorMessage,
+                        retryAction = { handleOAuthCallback(code) }
+                    )
                 }
                 else -> {}
             }

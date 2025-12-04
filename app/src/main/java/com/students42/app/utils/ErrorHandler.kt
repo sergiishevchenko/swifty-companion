@@ -9,28 +9,33 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 object ErrorHandler {
-    fun handleError(context: Context, throwable: Throwable): String {
+    fun getErrorStringRes(throwable: Throwable): Int {
         return when (throwable) {
             is HttpException -> {
                 when (throwable.code()) {
-                    401 -> context.getString(R.string.error_unauthorized)
-                    404 -> context.getString(R.string.error_not_found)
-                    500 -> context.getString(R.string.error_server)
-                    else -> context.getString(R.string.error_unknown)
+                    401 -> R.string.error_unauthorized
+                    404 -> R.string.error_not_found
+                    500 -> R.string.error_server
+                    else -> R.string.error_unknown
                 }
             }
             is IOException, is SocketTimeoutException -> {
-                context.getString(R.string.error_network)
+                R.string.error_network
             }
             is UnknownHostException -> {
-                context.getString(R.string.error_network)
+                R.string.error_network
             }
             is JsonSyntaxException -> {
-                context.getString(R.string.error_unknown)
+                R.string.error_unknown
             }
             else -> {
-                context.getString(R.string.error_unknown)
+                R.string.error_unknown
             }
         }
+    }
+
+    fun handleError(context: Context, throwable: Throwable): String {
+        val stringRes = getErrorStringRes(throwable)
+        return context.getString(stringRes)
     }
 }

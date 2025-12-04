@@ -27,8 +27,14 @@ class ProfileViewModel @Inject constructor(
     private val _profileState = MutableStateFlow<ProfileState>(ProfileState.Loading)
     val profileState: StateFlow<ProfileState> = _profileState.asStateFlow()
 
+    private var lastLogin: String? = null
 
     fun loadUserProfileByLogin(login: String) {
+        lastLogin = login
+        performLoadUserProfile(login)
+    }
+
+    private fun performLoadUserProfile(login: String) {
         viewModelScope.launch {
             _profileState.value = ProfileState.Loading
 
@@ -43,10 +49,19 @@ class ProfileViewModel @Inject constructor(
                     }
                     is Result.Error -> {
                         val errorMessage = ErrorHandler.handleError(context, userResult.exception)
-                        _profileState.value = ProfileState.Error(errorMessage)
+                        _profileState.value = ProfileState.Error(
+                            errorMessage,
+                            retryAction = { performLoadUserProfile(login) }
+                        )
                     }
                 }
             }
+        }
+    }
+
+    fun retry() {
+        lastLogin?.let { login ->
+            performLoadUserProfile(login)
         }
     }
 

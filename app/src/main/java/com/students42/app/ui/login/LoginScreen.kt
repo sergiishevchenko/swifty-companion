@@ -64,7 +64,12 @@ fun LoginScreen(
                 }
             }
             is LoginState.Error -> {
-                snackbarHostState.showSnackbar(state.message)
+                snackbarHostState.showSnackbar(
+                    message = state.message,
+                    actionLabel = if (state.retryAction != null) stringResource(R.string.retry) else null
+                ) {
+                    state.retryAction?.invoke()
+                }
             }
             else -> {}
         }

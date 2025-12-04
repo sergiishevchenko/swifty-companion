@@ -6,6 +6,6 @@ sealed class LoginState {
     object Idle : LoginState()
     object Loading : LoginState()
     data class Success(val user: UserModel) : LoginState()
-    data class Error(val message: String) : LoginState()
+    data class Error(val message: String, val retryAction: (() -> Unit)? = null) : LoginState()
     object NoToken : LoginState()
 }
