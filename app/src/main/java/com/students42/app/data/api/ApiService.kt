@@ -20,6 +20,9 @@ interface ApiService {
     @GET("v2/users/{userId}/projects_users")
     suspend fun getUserProjects(@Path("userId") userId: Int): List<ProjectModel>
 
+    @GET("v2/users/{userId}/locations")
+    suspend fun getUserLocations(@Path("userId") userId: Int): List<com.students42.app.data.models.LocationModel>
+
     @FormUrlEncoded
     @POST("oauth/token")
     suspend fun getToken(

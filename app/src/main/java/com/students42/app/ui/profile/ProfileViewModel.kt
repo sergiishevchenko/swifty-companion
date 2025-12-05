@@ -91,10 +91,12 @@ class ProfileViewModel @Inject constructor(
                 else -> emptyList()
             }
 
-            val projects = when (val result = projectsResult.await()) {
+            val allProjects = when (val result = projectsResult.await()) {
                 is Result.Success -> result.data
                 else -> emptyList()
             }
+
+            val projects = allProjects.filter { it.isCompleted || it.isFailed }
 
             _profileState.value = ProfileState.Success(
                 user = user,

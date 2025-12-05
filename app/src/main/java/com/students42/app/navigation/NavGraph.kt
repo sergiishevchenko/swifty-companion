@@ -23,7 +23,10 @@ fun NavGraph(
         }
         composable("profile/{login}") { backStackEntry ->
             val login = backStackEntry.arguments?.getString("login") ?: ""
-            ProfileScreen(login = login)
+            ProfileScreen(
+                login = login,
+                navController = navController
+            )
         }
     }
 }

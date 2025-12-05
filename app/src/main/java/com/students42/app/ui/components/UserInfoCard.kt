@@ -27,39 +27,28 @@ fun UserInfoCard(user: UserModel) {
                 text = "Login: ${user.login}",
                 style = MaterialTheme.typography.titleMedium
             )
-            user.email?.let {
-                Text(
-                    text = "Email: $it",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-            user.mobile?.let {
-                Text(
-                    text = "Mobile: $it",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
+            Text(
+                text = "Email: ${user.email ?: "N/A"}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
             Text(
                 text = "Level: ${user.level}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
-            user.location?.let {
-                Text(
-                    text = "Location: $it",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
             Text(
-                text = "Wallet: ${user.wallet}",
+                text = "Location: ${user.locationName ?: "N/A"}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
             Text(
-                text = "Evaluations: ${user.evaluations}",
+                text = "Wallet: ${user.wallet ?: "N/A"}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Text(
+                text = "Evaluations points: ${user.evaluations}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )

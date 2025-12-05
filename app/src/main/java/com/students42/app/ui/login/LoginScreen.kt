@@ -79,7 +79,7 @@ fun LoginScreen(
         when (val state = loginState) {
             is LoginState.Success -> {
                 navController.navigate("profile/${state.user.login}") {
-                    popUpTo("login") { inclusive = true }
+                    popUpTo("login") { inclusive = false }
                 }
             }
             is LoginState.Error -> {
