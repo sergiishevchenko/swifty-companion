@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.students42.app.utils.Constants
+import com.students42.app.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -96,12 +97,12 @@ class TokenRepository(private val context: Context) {
         return try {
             val result = onRefresh(refreshTokenValue)
             when (result) {
-                is com.students42.app.utils.Result.Success -> {
+                is Result.Success<Pair<String, Int?>> -> {
                     val (newToken, expiresIn) = result.data
                     saveToken(newToken, expiresIn)
                     true
                 }
-                is com.students42.app.utils.Result.Error -> {
+                is Result.Error -> {
                     false
                 }
                 else -> false
