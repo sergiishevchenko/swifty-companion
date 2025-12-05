@@ -12,9 +12,12 @@ import com.students42.app.utils.ErrorHandler
 import com.students42.app.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -67,62 +70,37 @@ class ProfileViewModel @Inject constructor(
 
     private fun loadUserData(userId: Int, user: com.students42.app.data.models.UserModel) {
         viewModelScope.launch {
-            var skills: List<SkillModel>? = null
-            var projects: List<ProjectModel>? = null
-
-            launch {
-                userRepository.getUserSkills(userId).collect { result ->
-                    when (result) {
-                        is Result.Success -> {
-                            skills = result.data
-                            if (skills != null && projects != null) {
-                                _profileState.value = ProfileState.Success(
-                                    user = user,
-                                    skills = skills!!,
-                                    projects = projects!!
-                                )
-                            }
-                        }
-                        is Result.Error -> {
-                            if (projects != null) {
-                                _profileState.value = ProfileState.Success(
-                                    user = user,
-                                    skills = emptyList(),
-                                    projects = projects!!
-                                )
-                            }
-                        }
-                        else -> {}
-                    }
+            val skillsResult = async {
+                try {
+                    userRepository.getUserSkills(userId).first { it is Result.Success || it is Result.Error }
+                } catch (e: Exception) {
+                    Result.Error(e) as Result<List<SkillModel>>
                 }
             }
 
-            launch {
-                userRepository.getUserProjects(userId).collect { result ->
-                    when (result) {
-                        is Result.Success -> {
-                            projects = result.data
-                            if (skills != null && projects != null) {
-                                _profileState.value = ProfileState.Success(
-                                    user = user,
-                                    skills = skills!!,
-                                    projects = projects!!
-                                )
-                            }
-                        }
-                        is Result.Error -> {
-                            if (skills != null) {
-                                _profileState.value = ProfileState.Success(
-                                    user = user,
-                                    skills = skills!!,
-                                    projects = emptyList()
-                                )
-                            }
-                        }
-                        else -> {}
-                    }
+            val projectsResult = async {
+                try {
+                    userRepository.getUserProjects(userId).first { it is Result.Success || it is Result.Error }
+                } catch (e: Exception) {
+                    Result.Error(e) as Result<List<ProjectModel>>
                 }
             }
+
+            val skills = when (val result = skillsResult.await()) {
+                is Result.Success -> result.data
+                else -> emptyList()
+            }
+
+            val projects = when (val result = projectsResult.await()) {
+                is Result.Success -> result.data
+                else -> emptyList()
+            }
+
+            _profileState.value = ProfileState.Success(
+                user = user,
+                skills = skills,
+                projects = projects
+            )
         }
     }
 }
