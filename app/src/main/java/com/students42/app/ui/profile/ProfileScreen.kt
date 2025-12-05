@@ -2,13 +2,17 @@ package com.students42.app.ui.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -27,7 +31,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,6 +64,10 @@ fun ProfileScreen(
         }
     }
 
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
+    val isTablet = configuration.screenWidthDp >= 600
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -65,9 +75,10 @@ fun ProfileScreen(
             )
         }
     ) { paddingValues ->
-        Box(
+        BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.systemBars)
                 .padding(paddingValues)
         ) {
             when (val state = profileState) {
@@ -77,40 +88,88 @@ fun ProfileScreen(
                     )
                 }
                 is ProfileState.Success -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        state.user.imageUrl?.let { imageUrl ->
-                            Box(
+                    if (isLandscape && isTablet) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                contentAlignment = Alignment.Center
+                                    .weight(1f)
+                                    .padding(16.dp)
                             ) {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(context)
-                                        .data(imageUrl)
-                                        .crossfade(true)
-                                        .build(),
-                                    contentDescription = "Profile picture",
-                                    modifier = Modifier
-                                        .fillMaxWidth(0.3f)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
+                                state.user.imageUrl?.let { imageUrl ->
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(bottom = 16.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(context)
+                                                .data(imageUrl)
+                                                .crossfade(true)
+                                                .build(),
+                                            contentDescription = "Profile picture",
+                                            modifier = Modifier
+                                                .fillMaxWidth(0.4f)
+                                                .clip(CircleShape),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+                                UserInfoCard(user = state.user)
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(16.dp)
+                            ) {
+                                if (state.skills.isNotEmpty()) {
+                                    SkillsList(skills = state.skills)
+                                }
+                                if (state.projects.isNotEmpty()) {
+                                    ProjectsList(projects = state.projects)
+                                }
                             }
                         }
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            state.user.imageUrl?.let { imageUrl ->
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(context)
+                                            .data(imageUrl)
+                                            .crossfade(true)
+                                            .build(),
+                                        contentDescription = "Profile picture",
+                                        modifier = Modifier
+                                            .fillMaxWidth(if (isTablet) 0.25f else 0.3f)
+                                            .clip(CircleShape),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
+                            }
 
-                        UserInfoCard(user = state.user)
+                            UserInfoCard(user = state.user)
 
-                        if (state.skills.isNotEmpty()) {
-                            SkillsList(skills = state.skills)
-                        }
+                            if (state.skills.isNotEmpty()) {
+                                SkillsList(skills = state.skills)
+                            }
 
-                        if (state.projects.isNotEmpty()) {
-                            ProjectsList(projects = state.projects)
+                            if (state.projects.isNotEmpty()) {
+                                ProjectsList(projects = state.projects)
+                            }
                         }
                     }
                 }
