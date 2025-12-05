@@ -9,6 +9,12 @@ android {
     namespace = "com.students42.app"
     compileSdk = 34
 
+    val localProperties = java.util.Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { localProperties.load(it) }
+    }
+
     defaultConfig {
         applicationId = "com.students42.app"
         minSdk = 24
@@ -20,6 +26,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "API_CLIENT_ID", "\"${localProperties.getProperty("API_UID", "your_client_id")}\"")
+        buildConfigField("String", "API_CLIENT_SECRET", "\"${localProperties.getProperty("API_SECRET", "your_client_secret")}\"")
+        buildConfigField("String", "API_REDIRECT_URI", "\"${localProperties.getProperty("API_REDIRECT_URI", "students42://oauth/callback")}\"")
     }
 
     buildTypes {

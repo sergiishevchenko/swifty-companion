@@ -1,6 +1,7 @@
 package com.students42.app.di
 
 import android.content.Context
+import com.students42.app.BuildConfig
 import com.students42.app.auth.AuthService
 import com.students42.app.data.api.ApiService
 import com.students42.app.data.local.TokenRepository
@@ -18,21 +19,21 @@ object AuthModule {
     @Singleton
     @ClientId
     fun provideClientId(): String {
-        return "your_client_id"
+        return BuildConfig.API_CLIENT_ID
     }
 
     @Provides
     @Singleton
     @ClientSecret
     fun provideClientSecret(): String {
-        return "your_client_secret"
+        return BuildConfig.API_CLIENT_SECRET
     }
 
     @Provides
     @Singleton
     @RedirectUri
     fun provideRedirectUri(): String {
-        return "students42://oauth/callback"
+        return BuildConfig.API_REDIRECT_URI
     }
 
     @Provides
