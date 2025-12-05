@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -9,8 +11,8 @@ android {
     namespace = "com.students42.app"
     compileSdk = 34
 
-    val localProperties = java.util.Properties()
     val localPropertiesFile = rootProject.file("local.properties")
+    val localProperties = Properties()
     if (localPropertiesFile.exists()) {
         localPropertiesFile.inputStream().use { localProperties.load(it) }
     }
