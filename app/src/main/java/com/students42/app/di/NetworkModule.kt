@@ -59,8 +59,8 @@ object NetworkModule {
     fun provideAuthInterceptor(
         tokenRepository: TokenRepository,
         apiServiceProvider: javax.inject.Provider<ApiService>,
-        clientId: String,
-        clientSecret: String
+        @ClientId clientId: String,
+        @ClientSecret clientSecret: String
     ): AuthInterceptor {
         return AuthInterceptor(
             tokenRepository = tokenRepository,

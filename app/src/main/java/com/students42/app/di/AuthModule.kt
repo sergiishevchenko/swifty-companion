@@ -16,18 +16,21 @@ import javax.inject.Singleton
 object AuthModule {
     @Provides
     @Singleton
+    @ClientId
     fun provideClientId(): String {
         return "your_client_id"
     }
 
     @Provides
     @Singleton
+    @ClientSecret
     fun provideClientSecret(): String {
         return "your_client_secret"
     }
 
     @Provides
     @Singleton
+    @RedirectUri
     fun provideRedirectUri(): String {
         return "students42://oauth/callback"
     }
@@ -38,9 +41,9 @@ object AuthModule {
         @ApplicationContext context: Context,
         apiService: ApiService,
         tokenRepository: TokenRepository,
-        clientId: String,
-        clientSecret: String,
-        redirectUri: String
+        @ClientId clientId: String,
+        @ClientSecret clientSecret: String,
+        @RedirectUri redirectUri: String
     ): AuthService {
         return AuthService(
             context = context,
