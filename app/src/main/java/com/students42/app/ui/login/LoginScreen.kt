@@ -19,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,10 +70,11 @@ fun LoginScreen(
                 }
             }
             is LoginState.Error -> {
-                snackbarHostState.showSnackbar(
+                val result = snackbarHostState.showSnackbar(
                     message = state.message,
-                    actionLabel = if (state.retryAction != null) stringResource(R.string.retry) else null
-                ) {
+                    actionLabel = if (state.retryAction != null) context.getString(R.string.retry) else null
+                )
+                if (result == SnackbarResult.ActionPerformed) {
                     state.retryAction?.invoke()
                 }
             }
@@ -109,7 +111,7 @@ fun LoginScreen(
                     onValueChange = { loginText = it },
                     label = { Text(stringResource(R.string.login_hint)) },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = loginState !is LoginState.Loading && loginState !is LoginState.NoToken
+                    enabled = loginState !is LoginState.Loading
                 )
 
                 when (loginState) {
