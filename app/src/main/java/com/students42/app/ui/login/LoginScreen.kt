@@ -21,6 +21,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -41,7 +42,8 @@ import com.students42.app.R
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    initialUri: Uri? = null
 ) {
     val loginState by viewModel.loginState.collectAsState()
     val context = LocalContext.current
@@ -55,6 +57,17 @@ fun LoginScreen(
             val uri = result.data?.data
             uri?.let {
                 val code = it.getQueryParameter("code")
+                code?.let { authCode ->
+                    viewModel.handleOAuthCallback(authCode)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(initialUri) {
+        initialUri?.let { uri ->
+            if (uri.scheme == "students42" && uri.host == "oauth" && uri.path == "/callback") {
+                val code = uri.getQueryParameter("code")
                 code?.let { authCode ->
                     viewModel.handleOAuthCallback(authCode)
                 }

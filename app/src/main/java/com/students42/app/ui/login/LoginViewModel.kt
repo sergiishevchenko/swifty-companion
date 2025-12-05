@@ -42,6 +42,8 @@ class LoginViewModel @Inject constructor(
             val token = tokenRepository.getToken().first()
             if (token == null) {
                 _loginState.value = LoginState.NoToken
+            } else {
+                _loginState.value = LoginState.Idle
             }
         }
     }
@@ -100,7 +102,7 @@ class LoginViewModel @Inject constructor(
             when (val result = authService.getToken(code)) {
                 is Result.Success -> {
                     authService.saveTokenResponse(result.data)
-                    _loginState.value = LoginState.Idle
+                    checkToken()
                 }
                 is Result.Error -> {
                     val errorMessage = ErrorHandler.handleError(context, result.exception)
