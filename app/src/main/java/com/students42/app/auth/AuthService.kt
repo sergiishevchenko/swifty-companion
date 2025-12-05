@@ -69,4 +69,35 @@ class AuthService(
     suspend fun isTokenValid(): Boolean {
         return !tokenRepository.isTokenExpired()
     }
+
+    suspend fun refreshToken(refreshToken: String): Result<TokenResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.refreshToken(
+                    grantType = "refresh_token",
+                    clientId = clientId,
+                    clientSecret = clientSecret,
+                    refreshToken = refreshToken
+                )
+                Result.Success(response)
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun refreshTokenIfNeeded(): Boolean {
+        val refreshToken = tokenRepository.getRefreshToken() ?: return false
+        val result = refreshToken(refreshToken)
+        return when (result) {
+            is Result.Success -> {
+                saveTokenResponse(result.data)
+                true
+            }
+            is Result.Error -> {
+                false
+            }
+            else -> false
+        }
+    }
 }

@@ -29,4 +29,13 @@ interface ApiService {
         @Field("code") code: String,
         @Field("redirect_uri") redirectUri: String
     ): TokenResponse
+
+    @FormUrlEncoded
+    @POST("oauth/token")
+    suspend fun refreshToken(
+        @Field("grant_type") grantType: String,
+        @Field("client_id") clientId: String,
+        @Field("client_secret") clientSecret: String,
+        @Field("refresh_token") refreshToken: String
+    ): TokenResponse
 }

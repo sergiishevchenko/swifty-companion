@@ -68,4 +68,46 @@ class TokenRepository(private val context: Context) {
             preferences.remove(refreshTokenKey)
         }
     }
+
+    suspend fun getRefreshToken(): String? {
+        return context.dataStore.data.map { preferences ->
+            preferences[refreshTokenKey]
+        }.first()
+    }
+
+    suspend fun getValidToken(): String? {
+        val token = getTokenSync()
+        if (token != null && !isTokenExpired()) {
+            return token
+        }
+        return null
+    }
+
+    suspend fun refreshTokenIfNeeded(
+        refreshToken: String?,
+        onRefresh: suspend (String) -> Result<Pair<String, Int?>>
+    ): Boolean {
+        if (!isTokenExpired()) {
+            return true
+        }
+
+        val refreshTokenValue = refreshToken ?: getRefreshToken() ?: return false
+
+        return try {
+            val result = onRefresh(refreshTokenValue)
+            when (result) {
+                is com.students42.app.utils.Result.Success -> {
+                    val (newToken, expiresIn) = result.data
+                    saveToken(newToken, expiresIn)
+                    true
+                }
+                is com.students42.app.utils.Result.Error -> {
+                    false
+                }
+                else -> false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
 }
