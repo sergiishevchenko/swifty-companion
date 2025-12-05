@@ -37,18 +37,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        authInterceptor: AuthInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .build()
-    }
-
-    @Provides
-    @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         gson: Gson
@@ -68,7 +56,29 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(tokenRepository: TokenRepository): AuthInterceptor {
-        return AuthInterceptor(tokenRepository)
+    fun provideAuthInterceptor(
+        tokenRepository: TokenRepository,
+        apiServiceProvider: javax.inject.Provider<ApiService>,
+        clientId: String,
+        clientSecret: String
+    ): AuthInterceptor {
+        return AuthInterceptor(
+            tokenRepository = tokenRepository,
+            apiServiceProvider = apiServiceProvider,
+            clientId = clientId,
+            clientSecret = clientSecret
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .addInterceptor(loggingInterceptor)
+            .build()
     }
 }
