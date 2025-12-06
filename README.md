@@ -351,7 +351,10 @@ The app uses the following 42 Intra API endpoints:
 
 ### Authentication Endpoints
 
-#### POST `/oauth/token` - Get Access Token
+---
+
+#### `POST /oauth/token` - Get Access Token
+
 Obtains an access token using the authorization code from OAuth flow.
 
 **Parameters:**
@@ -368,7 +371,10 @@ Obtains an access token using the authorization code from OAuth flow.
 
 **Usage:** Called during initial OAuth authentication flow.
 
-#### POST `/oauth/token` - Refresh Access Token
+---
+
+#### `POST /oauth/token` - Refresh Access Token
+
 Refreshes an expired access token using the refresh token.
 
 **Parameters:**
@@ -384,9 +390,14 @@ Refreshes an expired access token using the refresh token.
 
 **Usage:** Automatically called by `AuthInterceptor` when access token expires.
 
+---
+
 ### User Endpoints
 
-#### GET `/v2/users/{login}` - Get User Information
+---
+
+#### `GET /v2/users/{login}` - Get User Information
+
 Retrieves detailed information about a user by their login (username).
 
 **Path Parameters:**
@@ -414,7 +425,10 @@ Retrieves detailed information about a user by their login (username).
 
 **Usage:** Called when user searches for a student by login on the login screen.
 
-#### GET `/v2/users/{userId}/skills` - Get User Skills
+---
+
+#### `GET /v2/users/{userId}/skills` - Get User Skills
+
 Retrieves all skills for a specific user.
 
 **Path Parameters:**
@@ -428,7 +442,10 @@ Retrieves all skills for a specific user.
 
 **Usage:** Called to fetch user skills separately if not included in user info response. Used as fallback if skills are not in the main user response.
 
-#### GET `/v2/users/{userId}/projects_users` - Get User Projects
+---
+
+#### `GET /v2/users/{userId}/projects_users` - Get User Projects
+
 Retrieves all projects for a specific user.
 
 **Path Parameters:**
@@ -454,7 +471,10 @@ Retrieves all projects for a specific user.
 
 **Usage:** Called to fetch user projects separately if not included in user info response. Used as fallback if projects are not in the main user response. Projects are then filtered to show only completed and failed projects.
 
-#### GET `/v2/users/{userId}/locations` - Get User Locations
+---
+
+#### `GET /v2/users/{userId}/locations` - Get User Locations
+
 Retrieves location history for a specific user.
 
 **Path Parameters:**
@@ -468,6 +488,8 @@ Retrieves location history for a specific user.
   - `beginAt`: Start date
 
 **Usage:** Currently defined in API service but not actively used in the app. Could be used for location history display.
+
+---
 
 ### Base URL
 All endpoints use the base URL: `https://api.intra.42.fr`
