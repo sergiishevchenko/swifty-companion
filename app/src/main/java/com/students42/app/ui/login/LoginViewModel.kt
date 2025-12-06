@@ -13,11 +13,13 @@ import com.students42.app.utils.ErrorHandler
 import com.students42.app.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,22 +67,39 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
 
-            userRepository.getUserInfo(login).collect { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        _loginState.value = LoginState.Loading
-                    }
-                    is Result.Success -> {
-                        _loginState.value = LoginState.Success(result.data)
-                    }
-                    is Result.Error -> {
-                        val errorMessage = ErrorHandler.handleError(context, result.exception)
-                        _loginState.value = LoginState.Error(
-                            errorMessage,
-                            retryAction = { performSearch(login) }
-                        )
+            try {
+                withTimeout(30000) {
+                    userRepository.getUserInfo(login).collect { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                _loginState.value = LoginState.Loading
+                            }
+                            is Result.Success -> {
+                                _loginState.value = LoginState.Success(result.data)
+                                return@collect
+                            }
+                            is Result.Error -> {
+                                val errorMessage = ErrorHandler.handleError(context, result.exception)
+                                _loginState.value = LoginState.Error(
+                                    errorMessage,
+                                    retryAction = { performSearch(login) }
+                                )
+                                return@collect
+                            }
+                        }
                     }
                 }
+            } catch (e: TimeoutCancellationException) {
+                _loginState.value = LoginState.Error(
+                    "Request timeout. Please try again.",
+                    retryAction = { performSearch(login) }
+                )
+            } catch (e: Exception) {
+                val errorMessage = ErrorHandler.handleError(context, e)
+                _loginState.value = LoginState.Error(
+                    errorMessage,
+                    retryAction = { performSearch(login) }
+                )
             }
         }
     }

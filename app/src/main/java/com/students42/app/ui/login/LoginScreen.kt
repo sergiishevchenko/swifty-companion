@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Button
@@ -32,7 +34,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.foundation.Image
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -117,19 +121,35 @@ fun LoginScreen(
                     .then(if (isLandscape) Modifier.fillMaxWidth(0.6f) else Modifier.fillMaxWidth())
                     .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
+                Image(
+                    painter = painterResource(id = R.mipmap.ic_launcher),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .size(200.dp)
+                        .padding(bottom = 16.dp)
+                )
+                Text(
+                    text = "Enter your login to view profile",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+                
                 OutlinedTextField(
                     value = loginText,
                     onValueChange = { loginText = it },
                     label = { Text(stringResource(R.string.login_hint)) },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = loginState !is LoginState.Loading
+                    enabled = loginState !is LoginState.Loading,
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
                 )
 
                 when (loginState) {
                     is LoginState.Loading -> {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                     is LoginState.NoToken -> {
                         Button(
@@ -137,18 +157,30 @@ fun LoginScreen(
                                 val intent = viewModel.startOAuthFlow()
                                 oauthLauncher.launch(intent)
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
+                            shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
                         ) {
-                            Text(stringResource(R.string.authorize_button))
+                            Text(
+                                stringResource(R.string.authorize_button),
+                                style = MaterialTheme.typography.labelLarge
+                            )
                         }
                     }
                     else -> {
                         Button(
                             onClick = { viewModel.searchUser(loginText) },
-                            modifier = Modifier.fillMaxWidth(),
-                            enabled = loginText.isNotBlank()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
+                            enabled = loginText.isNotBlank(),
+                            shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
                         ) {
-                            Text(stringResource(R.string.search_button))
+                            Text(
+                                stringResource(R.string.search_button),
+                                style = MaterialTheme.typography.labelLarge
+                            )
                         }
                     }
                 }
