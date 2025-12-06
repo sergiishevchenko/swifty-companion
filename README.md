@@ -1,4 +1,4 @@
-# 42 Students Mobile App
+# Swifty Companion
 
 A native Android application for retrieving and displaying information about 42 students through the 42 API using OAuth2 authentication.
 
