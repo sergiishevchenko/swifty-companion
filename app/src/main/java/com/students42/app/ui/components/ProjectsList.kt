@@ -46,7 +46,7 @@ fun ProjectsList(projects: List<ProjectModel>) {
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = project.name,
+                        text = project.name ?: "Unknown Project",
                         style = MaterialTheme.typography.titleMedium,
                         color = if (project.isCompleted || project.isFailed) {
                             Color.White
@@ -55,7 +55,7 @@ fun ProjectsList(projects: List<ProjectModel>) {
                         }
                     )
                     Text(
-                        text = "Status: ${project.status}",
+                        text = "Status: ${project.status ?: "unknown"}",
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 4.dp),
                         color = if (project.isCompleted || project.isFailed) {

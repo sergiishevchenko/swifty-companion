@@ -86,17 +86,37 @@ class ProfileViewModel @Inject constructor(
                 }
             }
 
-            val skills = when (val result = skillsResult.await()) {
+            val skillsFromApi = when (val result = skillsResult.await()) {
                 is Result.Success -> result.data
                 else -> emptyList()
             }
 
-            val allProjects = when (val result = projectsResult.await()) {
+            val projectsFromApi = when (val result = projectsResult.await()) {
                 is Result.Success -> result.data
                 else -> emptyList()
             }
 
-            val projects = allProjects.filter { it.isCompleted || it.isFailed }
+            val skillsFromCursus = user.cursusUsers
+                ?.flatMap { it.skills ?: emptyList() }
+                ?: emptyList()
+
+            val projectsFromUser = user.projectsUsers ?: emptyList()
+
+            val skills = if (skillsFromApi.isNotEmpty()) {
+                skillsFromApi
+            } else {
+                skillsFromCursus
+            }
+
+            val allProjects = if (projectsFromApi.isNotEmpty()) {
+                projectsFromApi
+            } else {
+                projectsFromUser
+            }
+
+            val projects = allProjects.filter { project ->
+                project.isCompleted || project.isFailed
+            }
 
             _profileState.value = ProfileState.Success(
                 user = user,

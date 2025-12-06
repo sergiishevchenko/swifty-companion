@@ -27,21 +27,21 @@ fun UserInfoCard(user: UserModel) {
                 text = "Login: ${user.login}",
                 style = MaterialTheme.typography.titleMedium
             )
-            Text(
+                Text(
                 text = "Email: ${user.email ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             Text(
                 text = "Level: ${user.level}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
-            Text(
+                Text(
                 text = "Location: ${user.locationName ?: "N/A"}",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 4.dp)
-            )
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
             Text(
                 text = "Wallet: ${user.wallet ?: "N/A"}",
                 style = MaterialTheme.typography.bodyMedium,

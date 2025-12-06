@@ -13,7 +13,8 @@ data class CursusUserModel(
     val beginAt: String?,
     @SerializedName("end_at")
     val endAt: String?,
-    val cursus: CursusModel?
+    val cursus: CursusModel?,
+    val skills: List<SkillModel>?
 )
 
 data class CursusModel(
