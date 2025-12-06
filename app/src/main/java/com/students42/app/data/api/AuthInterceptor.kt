@@ -18,9 +18,26 @@ class AuthInterceptor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
+        val url = originalRequest.url.toString()
 
-        val token = runBlocking {
-            tokenRepository.getValidToken()
+        if (url.contains("/oauth/token")) {
+            return chain.proceed(originalRequest)
+        }
+
+        val token = try {
+            runBlocking {
+                val tokenValue = tokenRepository.getTokenSync()
+                val isExpired = tokenRepository.isTokenExpired()
+                
+                if (isExpired && tokenValue != null) {
+                    refreshTokenIfNeeded()
+                    tokenRepository.getTokenSync()
+                } else {
+                    tokenValue
+                }
+            }
+        } catch (e: Exception) {
+            null
         }
 
         val requestBuilder = originalRequest.newBuilder()
