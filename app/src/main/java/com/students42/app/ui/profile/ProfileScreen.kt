@@ -1,5 +1,6 @@
 package com.students42.app.ui.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -79,7 +80,12 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profile") },
+                title = { 
+                    Text(
+                        "Profile",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -93,7 +99,12 @@ fun ProfileScreen(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
             )
         }
     ) { paddingValues ->
@@ -125,20 +136,31 @@ fun ProfileScreen(
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(bottom = 16.dp),
+                                            .padding(bottom = 20.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        AsyncImage(
-                                            model = ImageRequest.Builder(context)
-                                                .data(imageUrl)
-                                                .crossfade(true)
-                                                .build(),
-                                            contentDescription = "Profile picture",
+                                        Box(
                                             modifier = Modifier
                                                 .fillMaxWidth(0.4f)
-                                                .clip(CircleShape),
-                                            contentScale = ContentScale.Crop
-                                        )
+                                                .clip(CircleShape)
+                                                .background(
+                                                    MaterialTheme.colorScheme.primaryContainer,
+                                                    CircleShape
+                                                )
+                                                .padding(4.dp)
+                                        ) {
+                                            AsyncImage(
+                                                model = ImageRequest.Builder(context)
+                                                    .data(imageUrl)
+                                                    .crossfade(true)
+                                                    .build(),
+                                                contentDescription = "Profile picture",
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .clip(CircleShape),
+                                                contentScale = ContentScale.Crop
+                                            )
+                                        }
                                     }
                                 }
                                 UserInfoCard(user = state.user)
@@ -166,20 +188,31 @@ fun ProfileScreen(
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(16.dp),
+                                        .padding(vertical = 20.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(context)
-                                            .data(imageUrl)
-                                            .crossfade(true)
-                                            .build(),
-                                        contentDescription = "Profile picture",
+                                    Box(
                                         modifier = Modifier
                                             .fillMaxWidth(if (isTablet) 0.25f else 0.3f)
-                                            .clip(CircleShape),
-                                        contentScale = ContentScale.Crop
-                                    )
+                                            .clip(CircleShape)
+                                            .background(
+                                                MaterialTheme.colorScheme.primaryContainer,
+                                                CircleShape
+                                            )
+                                            .padding(4.dp)
+                                    ) {
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(context)
+                                                .data(imageUrl)
+                                                .crossfade(true)
+                                                .build(),
+                                            contentDescription = "Profile picture",
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clip(CircleShape),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
                                 }
                             }
 

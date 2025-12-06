@@ -108,11 +108,13 @@ class ProfileViewModel @Inject constructor(
                 skillsFromCursus
             }
 
-            val allProjects = if (projectsFromApi.isNotEmpty()) {
-                projectsFromApi
-            } else {
-                projectsFromUser
-            }
+            val allProjects = (projectsFromApi + projectsFromUser)
+                .distinctBy { it.id }
+                .groupBy { it.name?.lowercase()?.trim() }
+                .values
+                .mapNotNull { projectsWithSameName ->
+                    projectsWithSameName.firstOrNull()
+                }
 
             val projects = allProjects.filter { project ->
                 project.isCompleted || project.isFailed
