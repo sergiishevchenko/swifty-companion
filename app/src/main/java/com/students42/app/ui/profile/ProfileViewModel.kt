@@ -96,16 +96,26 @@ class ProfileViewModel @Inject constructor(
                 else -> emptyList()
             }
 
-            val skillsFromCursus = user.cursusUsers
-                ?.flatMap { it.skills ?: emptyList() }
-                ?: emptyList()
-
             val projectsFromUser = user.projectsUsers ?: emptyList()
 
-            val skills = if (skillsFromApi.isNotEmpty()) {
-                skillsFromApi
-            } else {
-                skillsFromCursus
+            val currentCursus = user.cursusUsers?.let { cursusList ->
+                val activeCursus = cursusList
+                    .filter { it.endAt == null }
+                    .maxByOrNull { it.level ?: 0.0 }
+                
+                activeCursus ?: cursusList
+                    .filter { it.endAt != null }
+                    .maxByOrNull { it.endAt ?: "" }
+            }
+
+            val skillsFromCurrentCursus = currentCursus?.skills ?: emptyList()
+
+            val apiSkillsMap = skillsFromApi.associateBy { it.name.lowercase().trim() }
+            val cursusSkillsMap = skillsFromCurrentCursus.associateBy { it.name.lowercase().trim() }
+            
+            val allSkillNames = (apiSkillsMap.keys + cursusSkillsMap.keys).toSet()
+            val skills = allSkillNames.mapNotNull { skillName ->
+                apiSkillsMap[skillName] ?: cursusSkillsMap[skillName]
             }
 
             val allProjects = (projectsFromApi + projectsFromUser)
