@@ -19,6 +19,80 @@ A native Android application for retrieving and displaying information about 42 
 - ✅ **Navigation** - Back navigation support to return to login screen
 - ✅ **Request Timeout** - 30-second timeout handling to prevent infinite loading
 
+## Application Preview
+
+### Start Screen
+
+<div align="center">
+  <img src="screenshots/start-screen.png" alt="Start Screen" width="50%">
+</div>
+
+Initial screen with application logo, OAuth2 authentication button, and search field to find students by login.
+
+### Start Page - Empty Login Field
+
+<div align="center">
+  <img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="50%">
+</div>
+
+Login screen with empty search field ready for user input.
+
+### Start Page - Filled Login Field
+
+<div align="center">
+  <img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="50%">
+</div>
+
+Login screen with filled search field showing entered student login.
+
+### Profile - User Information
+
+<div align="center">
+  <img src="screenshots/profile-info.png" alt="Profile Information" width="50%">
+</div>
+
+User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.
+
+### Profile - Skills List
+
+<div align="center">
+  <img src="screenshots/skills.png" alt="Skills List" width="50%">
+</div>
+
+List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.
+
+### Profile - Projects with All Filters
+
+<div align="center">
+  <img src="screenshots/all-filters.png" alt="All Filters" width="50%">
+</div>
+
+Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.
+
+### Profile - Projects Filter (Piscine)
+
+<div align="center">
+  <img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="50%">
+</div>
+
+Filtered view displaying only Piscine projects with their completion status and marks.
+
+### Profile - Projects Filter (Common Core)
+
+<div align="center">
+  <img src="screenshots/projects-common.png" alt="Common Core Projects" width="50%">
+</div>
+
+Filtered view displaying only Common Core projects from the 42 cursus.
+
+### Profile - Projects Filter (Advanced Core)
+
+<div align="center">
+  <img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="50%">
+</div>
+
+Filtered view displaying only Advanced Core projects, including hangouts and work experience.
+
 ## Technology Stack
 
 - **Language**: Kotlin
@@ -193,80 +267,6 @@ app/src/main/java/com/students42/app/
 - **Navigation:**
   - Back button returns to login screen
   - Clears navigation stack on back
-
-## Screenshots
-
-### Start Screen
-
-<div align="center">
-  <img src="screenshots/start-screen.png" alt="Start Screen" width="50%">
-</div>
-
-Initial screen with application logo, OAuth2 authentication button, and search field to find students by login.
-
-### Start Page - Empty Login Field
-
-<div align="center">
-  <img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="50%">
-</div>
-
-Login screen with empty search field ready for user input.
-
-### Start Page - Filled Login Field
-
-<div align="center">
-  <img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="50%">
-</div>
-
-Login screen with filled search field showing entered student login.
-
-### Profile - User Information
-
-<div align="center">
-  <img src="screenshots/profile-info.png" alt="Profile Information" width="50%">
-</div>
-
-User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.
-
-### Profile - Skills List
-
-<div align="center">
-  <img src="screenshots/skills.png" alt="Skills List" width="50%">
-</div>
-
-List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.
-
-### Profile - Projects with All Filters
-
-<div align="center">
-  <img src="screenshots/all-filters.png" alt="All Filters" width="50%">
-</div>
-
-Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.
-
-### Profile - Projects Filter (Piscine)
-
-<div align="center">
-  <img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="50%">
-</div>
-
-Filtered view displaying only Piscine projects with their completion status and marks.
-
-### Profile - Projects Filter (Common Core)
-
-<div align="center">
-  <img src="screenshots/projects-common.png" alt="Common Core Projects" width="50%">
-</div>
-
-Filtered view displaying only Common Core projects from the 42 cursus.
-
-### Profile - Projects Filter (Advanced Core)
-
-<div align="center">
-  <img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="50%">
-</div>
-
-Filtered view displaying only Advanced Core projects, including hangouts and work experience.
 
 ## Architecture
 
