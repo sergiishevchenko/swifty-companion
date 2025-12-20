@@ -194,6 +194,56 @@ app/src/main/java/com/students42/app/
   - Back button returns to login screen
   - Clears navigation stack on back
 
+## Screenshots
+
+### Login Screen
+
+![Start Screen](screenshots/start-screen.png)
+
+The initial login screen where users can authenticate via OAuth2 or search for students by login.
+
+### Profile Screen - User Information
+
+![Profile User Info](screenshots/profile-user-info.png)
+
+User profile screen showing user information card with login, email, level, location, wallet, and evaluations points.
+
+### Profile Screen - Skills Display
+
+![Profile Skills](screenshots/profile-skills.png)
+
+Skills list displaying all user skills sorted by level in descending order with color-coded level indicators.
+
+### Profile Screen - Projects List (All)
+
+![Profile Projects All](screenshots/profile-projects-all.png)
+
+Projects list showing all completed and failed projects with filter chips for different project types.
+
+### Profile Screen - Projects Filter (Piscine)
+
+![Profile Projects Piscine](screenshots/profile-projects-piscine.png)
+
+Filtered projects list showing only Piscine projects. Green cards indicate completed projects, red cards indicate failed projects.
+
+### Profile Screen - Projects Filter (Common Core)
+
+![Profile Projects Common](screenshots/profile-projects-common.png)
+
+Filtered projects list showing only Common Core projects with visual distinction for project status.
+
+### Profile Screen - Projects Filter (Advanced Core)
+
+![Profile Projects Advanced](screenshots/profile-projects-advanced.png)
+
+Filtered projects list showing only Advanced Core projects including hangouts and work experience.
+
+### Profile Screen - Full View
+
+![Profile Full View](screenshots/profile-full-view.png)
+
+Complete profile screen view showing user information, skills, and projects in a scrollable layout.
+
 ## Architecture
 
 The app follows **MVVM (Model-View-ViewModel)** architecture pattern:
