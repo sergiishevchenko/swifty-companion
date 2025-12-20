@@ -27,10 +27,15 @@ data class UserModel(
         get() {
             val cursusUsersList = cursusUsers ?: return 0.0
             
-            return cursusUsersList
-                .filter { it.level != null }
-                .maxByOrNull { it.level ?: 0.0 }?.level
-                ?: 0.0
+            val activeCursus = cursusUsersList
+                .filter { it.endAt == null }
+                .maxByOrNull { it.level ?: 0.0 }
+            
+            val currentCursus = activeCursus ?: cursusUsersList
+                .filter { it.endAt != null }
+                .maxByOrNull { it.endAt ?: "" }
+            
+            return currentCursus?.level ?: 0.0
         }
 
     val locationName: String?
