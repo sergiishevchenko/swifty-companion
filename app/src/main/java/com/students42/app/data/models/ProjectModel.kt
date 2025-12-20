@@ -30,12 +30,33 @@ data class ProjectModel(
             return projectSlug.contains("piscine", ignoreCase = true)
         }
 
+    val isAdvancedCore: Boolean
+        get() {
+            if (!cursus.isNullOrEmpty()) {
+                val found = cursus.any { 
+                    val slug = it.slug?.lowercase() ?: ""
+                    val name = it.name?.lowercase() ?: ""
+                    slug.contains("advanced", ignoreCase = true) ||
+                    name.contains("advanced", ignoreCase = true)
+                }
+                if (found) return true
+            }
+            
+            val projectSlug = project?.slug?.lowercase() ?: ""
+            val projectName = project?.name?.lowercase() ?: ""
+            return projectSlug.contains("advanced", ignoreCase = true) ||
+                   projectName.contains("advanced", ignoreCase = true) ||
+                   projectName.contains("hangout", ignoreCase = true) ||
+                   projectName.contains("work experience", ignoreCase = true) ||
+                   projectName.contains("workexperience", ignoreCase = true)
+        }
+
     val isCommonCore: Boolean
         get() {
             if (isPiscine || isAdvancedCore) return false
             
             if (!cursus.isNullOrEmpty()) {
-                val hasCommonCoreCursus = cursus.any { 
+                val found = cursus.any { 
                     val slug = it.slug?.lowercase() ?: ""
                     val name = it.name?.lowercase() ?: ""
                     slug == "42cursus" || 
@@ -43,7 +64,7 @@ data class ProjectModel(
                     name.contains("common core", ignoreCase = true) ||
                     name.contains("42 cursus", ignoreCase = true)
                 }
-                if (hasCommonCoreCursus) return true
+                if (found) return true
             }
             
             val projectSlug = project?.slug?.lowercase() ?: ""
@@ -60,26 +81,6 @@ data class ProjectModel(
             }
             
             return true
-        }
-
-    val isAdvancedCore: Boolean
-        get() {
-            if (!cursus.isNullOrEmpty()) {
-                val found = cursus.any { 
-                    val slug = it.slug?.lowercase() ?: ""
-                    val name = it.name?.lowercase() ?: ""
-                    slug.contains("advanced", ignoreCase = true) ||
-                    name.contains("advanced", ignoreCase = true)
-                }
-                if (found) return true
-            }
-            val projectSlug = project?.slug?.lowercase() ?: ""
-            val projectName = project?.name?.lowercase() ?: ""
-            return projectSlug.contains("advanced", ignoreCase = true) ||
-                   projectName.contains("advanced", ignoreCase = true) ||
-                   projectName.contains("hangout", ignoreCase = true) ||
-                   projectName.contains("work experience", ignoreCase = true) ||
-                   projectName.contains("workexperience", ignoreCase = true)
         }
 
     val isCompleted: Boolean
