@@ -27,7 +27,7 @@ A native Android application for retrieving and displaying information about 42 
   <img src="screenshots/start-screen.png" alt="Start Screen" width="50%">
 </div>
 
-Initial screen with application logo, OAuth2 authentication button, and search field to find students by login.
+Initial screen with application logo.
 
 ### Start Page - Empty Login Field
 
