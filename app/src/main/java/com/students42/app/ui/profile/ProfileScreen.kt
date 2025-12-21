@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -153,14 +154,25 @@ fun ProfileScreen(
                         Column(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            Text(
-                                text = "Profile",
-                                style = MaterialTheme.typography.headlineMedium,
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                                textAlign = TextAlign.Center
-                            )
+                                    .padding(bottom = 20.dp, top = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Profile",
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .background(
+                                            MaterialTheme.colorScheme.surface,
+                                            RoundedCornerShape(12.dp)
+                                        )
+                                        .padding(horizontal = 24.dp, vertical = 12.dp)
+                                )
+                            }
                             Row(
                                 modifier = Modifier
                                     .weight(1f)
@@ -225,14 +237,25 @@ fun ProfileScreen(
                                 .fillMaxSize()
                                 .verticalScroll(rememberScrollState())
                         ) {
-                            Text(
-                                text = "Profile",
-                                style = MaterialTheme.typography.headlineMedium,
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                                textAlign = TextAlign.Center
-                            )
+                                    .padding(bottom = 20.dp, top = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Profile",
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .background(
+                                            MaterialTheme.colorScheme.surface,
+                                            RoundedCornerShape(12.dp)
+                                        )
+                                        .padding(horizontal = 24.dp, vertical = 12.dp)
+                                )
+                            }
                             state.user.imageUrl?.let { imageUrl ->
                                 Box(
                                     modifier = Modifier
