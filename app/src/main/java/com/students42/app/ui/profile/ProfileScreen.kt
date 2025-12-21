@@ -28,6 +28,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.activity.compose.BackHandler
 import androidx.navigation.NavController
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,9 +64,13 @@ fun ProfileScreen(
     val profileState by viewModel.profileState.collectAsState()
     val context = LocalContext.current
     var showErrorDialog by remember { mutableStateOf(false) }
+    var lastLoadedLogin by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(login) {
-        viewModel.loadUserProfileByLogin(login)
+        if (lastLoadedLogin != login) {
+            lastLoadedLogin = login
+            viewModel.loadUserProfileByLogin(login)
+        }
     }
 
     LaunchedEffect(profileState) {
@@ -77,9 +83,15 @@ fun ProfileScreen(
     val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
     val isTablet = configuration.screenWidthDp >= 600
 
+    BackHandler(enabled = true) {
+        navController.navigate("login") {
+            popUpTo("login") { inclusive = true }
+        }
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = { 
                     Text(
                         "Profile",
@@ -90,7 +102,7 @@ fun ProfileScreen(
                     IconButton(
                         onClick = {
                             navController.navigate("login") {
-                                popUpTo("login") { inclusive = false }
+                                popUpTo("login") { inclusive = true }
                             }
                         }
                     ) {
