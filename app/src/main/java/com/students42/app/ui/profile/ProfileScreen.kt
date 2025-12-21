@@ -31,6 +31,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavController
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -84,9 +85,8 @@ fun ProfileScreen(
     val isTablet = configuration.screenWidthDp >= 600
 
     BackHandler(enabled = true) {
-        navController.navigate("login") {
-            popUpTo("login") { inclusive = true }
-        }
+        val activity = context as? Activity
+        activity?.moveTaskToBack(true)
     }
 
     Scaffold(

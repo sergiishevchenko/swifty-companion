@@ -54,7 +54,7 @@ fun LoginScreen(
     var loginText by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     val currentRoute = navController.currentDestination?.route
-    var hasNavigatedToProfile by remember { mutableStateOf(false) }
+    var lastNavigatedLogin by remember { mutableStateOf<String?>(null) }
 
     val oauthLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -81,20 +81,16 @@ fun LoginScreen(
         }
     }
 
-    LaunchedEffect(key1 = currentRoute) {
-        if (currentRoute == "login") {
-            hasNavigatedToProfile = false
-        }
-    }
-    
     LaunchedEffect(key1 = loginState) {
         when (val state = loginState) {
             is LoginState.Success -> {
                 val route = navController.currentDestination?.route
-                if (route == "login" && !hasNavigatedToProfile) {
-                    hasNavigatedToProfile = true
-                    navController.navigate("profile/${state.user.login}") {
-                        popUpTo("login") { inclusive = false }
+                if (route == "login") {
+                    if (lastNavigatedLogin != state.user.login) {
+                        lastNavigatedLogin = state.user.login
+                        navController.navigate("profile/${state.user.login}") {
+                            popUpTo("login") { inclusive = false }
+                        }
                     }
                 }
             }
@@ -107,7 +103,9 @@ fun LoginScreen(
                     state.retryAction?.invoke()
                 }
             }
-            else -> {}
+            else -> {
+                lastNavigatedLogin = null
+            }
         }
     }
 
