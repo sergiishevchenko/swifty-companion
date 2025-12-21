@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.foundation.layout.size
@@ -85,25 +86,41 @@ fun ProjectsList(projects: List<ProjectModel>) {
                 selected = selectedFilter == ProjectFilter.ALL,
                 onClick = { selectedFilter = ProjectFilter.ALL },
                 label = { Text("All") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
             FilterChip(
                 selected = selectedFilter == ProjectFilter.PISCINE,
                 onClick = { selectedFilter = ProjectFilter.PISCINE },
                 label = { Text("Piscine") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
             FilterChip(
                 selected = selectedFilter == ProjectFilter.COMMON_CORE,
                 onClick = { selectedFilter = ProjectFilter.COMMON_CORE },
                 label = { Text("Common") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
             FilterChip(
                 selected = selectedFilter == ProjectFilter.ADVANCED_CORE,
                 onClick = { selectedFilter = ProjectFilter.ADVANCED_CORE },
                 label = { Text("Advanced") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
 
