@@ -46,6 +46,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -94,7 +95,7 @@ fun ProfileScreen(
             CenterAlignedTopAppBar(
                 title = { 
                     Text(
-                        "Profile",
+                        "Swifty Companion",
                         style = MaterialTheme.typography.titleLarge
                     )
                 },
@@ -134,59 +135,72 @@ fun ProfileScreen(
                 }
                 is ProfileState.Success -> {
                     if (isLandscape && isTablet) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
+                        Column(
+                            modifier = Modifier.fillMaxSize()
                         ) {
-                            Column(
+                            Text(
+                                text = "Profile",
+                                style = MaterialTheme.typography.headlineMedium,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            Row(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .padding(16.dp)
                             ) {
-                                state.user.imageUrl?.let { imageUrl ->
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(bottom = 20.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(16.dp)
+                                        .verticalScroll(rememberScrollState())
+                                ) {
+                                    state.user.imageUrl?.let { imageUrl ->
                                         Box(
                                             modifier = Modifier
-                                                .fillMaxWidth(0.4f)
-                                                .clip(CircleShape)
-                                                .background(
-                                                    MaterialTheme.colorScheme.primaryContainer,
-                                                    CircleShape
-                                                )
-                                                .padding(4.dp)
+                                                .fillMaxWidth()
+                                                .padding(bottom = 20.dp),
+                                            contentAlignment = Alignment.Center
                                         ) {
-                                            AsyncImage(
-                                                model = ImageRequest.Builder(context)
-                                                    .data(imageUrl)
-                                                    .crossfade(true)
-                                                    .build(),
-                                                contentDescription = "Profile picture",
+                                            Box(
                                                 modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clip(CircleShape),
-                                                contentScale = ContentScale.Crop
-                                            )
+                                                    .fillMaxWidth(0.4f)
+                                                    .clip(CircleShape)
+                                                    .background(
+                                                        MaterialTheme.colorScheme.primaryContainer,
+                                                        CircleShape
+                                                    )
+                                                    .padding(4.dp)
+                                            ) {
+                                                AsyncImage(
+                                                    model = ImageRequest.Builder(context)
+                                                        .data(imageUrl)
+                                                        .crossfade(true)
+                                                        .build(),
+                                                    contentDescription = "Profile picture",
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .clip(CircleShape),
+                                                    contentScale = ContentScale.Crop
+                                                )
+                                            }
                                         }
                                     }
+                                    UserInfoCard(user = state.user)
                                 }
-                                UserInfoCard(user = state.user)
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(16.dp)
-                            ) {
-                                if (state.skills.isNotEmpty()) {
-                                    SkillsList(skills = state.skills)
-                                }
-                                if (state.projects.isNotEmpty()) {
-                                    ProjectsList(projects = state.projects)
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(16.dp)
+                                        .verticalScroll(rememberScrollState())
+                                ) {
+                                    if (state.skills.isNotEmpty()) {
+                                        SkillsList(skills = state.skills)
+                                    }
+                                    if (state.projects.isNotEmpty()) {
+                                        ProjectsList(projects = state.projects)
+                                    }
                                 }
                             }
                         }
@@ -196,6 +210,14 @@ fun ProfileScreen(
                                 .fillMaxSize()
                                 .verticalScroll(rememberScrollState())
                         ) {
+                            Text(
+                                text = "Profile",
+                                style = MaterialTheme.typography.headlineMedium,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                textAlign = TextAlign.Center
+                            )
                             state.user.imageUrl?.let { imageUrl ->
                                 Box(
                                     modifier = Modifier
