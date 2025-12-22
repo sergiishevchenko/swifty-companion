@@ -21,7 +21,11 @@ A native Android application for retrieving and displaying information about 42 
 
 ## Application Preview
 
+<div align="center">
+
 ### Start Screen
+
+</div>
 
 <div align="center">
   <img src="screenshots/start-screen.png" alt="Start Screen" width="50%">
@@ -29,7 +33,11 @@ A native Android application for retrieving and displaying information about 42 
 
 Initial screen with application logo.
 
+<div align="center">
+
 ### Start Page - Empty Login Field
+
+</div>
 
 <div align="center">
   <img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="50%">
@@ -37,7 +45,11 @@ Initial screen with application logo.
 
 Login screen with empty search field ready for user input.
 
+<div align="center">
+
 ### Start Page - Filled Login Field
+
+</div>
 
 <div align="center">
   <img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="50%">
@@ -45,7 +57,11 @@ Login screen with empty search field ready for user input.
 
 Login screen with filled search field showing entered student login.
 
+<div align="center">
+
 ### Profile - User Information
+
+</div>
 
 <div align="center">
   <img src="screenshots/profile-info.png" alt="Profile Information" width="50%">
@@ -53,7 +69,11 @@ Login screen with filled search field showing entered student login.
 
 User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.
 
+<div align="center">
+
 ### Profile - Skills List
+
+</div>
 
 <div align="center">
   <img src="screenshots/skills.png" alt="Skills List" width="50%">
@@ -61,7 +81,11 @@ User profile card showing profile picture, login, email, level, location, wallet
 
 List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.
 
+<div align="center">
+
 ### Profile - Projects with All Filters
+
+</div>
 
 <div align="center">
   <img src="screenshots/all-filters.png" alt="All Filters" width="50%">
@@ -69,7 +93,11 @@ List of user skills sorted by level in descending order, with color-coded level 
 
 Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.
 
+<div align="center">
+
 ### Profile - Projects Filter (Piscine)
+
+</div>
 
 <div align="center">
   <img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="50%">
@@ -77,7 +105,11 @@ Projects list with all filter chips visible (All, Piscine, Common, Advanced) sho
 
 Filtered view displaying only Piscine projects with their completion status and marks.
 
+<div align="center">
+
 ### Profile - Projects Filter (Common Core)
+
+</div>
 
 <div align="center">
   <img src="screenshots/projects-common.png" alt="Common Core Projects" width="50%">
@@ -85,7 +117,11 @@ Filtered view displaying only Piscine projects with their completion status and 
 
 Filtered view displaying only Common Core projects from the 42 cursus.
 
+<div align="center">
+
 ### Profile - Projects Filter (Advanced Core)
+
+</div>
 
 <div align="center">
   <img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="50%">
