@@ -407,8 +407,6 @@ The app uses the following 42 Intra API endpoints:
 
 ### Authentication Endpoints
 
----
-
 <details>
 <summary><strong>POST /oauth/token</strong> — Get Access Token</summary>
 
