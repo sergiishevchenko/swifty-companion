@@ -21,11 +21,59 @@ A native Android application for retrieving and displaying information about 42 
 
 ## Application Preview
 
-| | | |
-| --- | --- | --- |
-| <strong>Start Screen</strong><br><img src="screenshots/start-screen.png" alt="Start Screen" width="300"><br>Initial screen with application logo.<br>&nbsp; | <strong>Start - Empty Login</strong><br><img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="300"><br>Login screen with empty search field ready for user input.<br>&nbsp; | <strong>Start - Filled Login</strong><br><img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="300"><br>Login screen with filled search field showing entered student login.<br>&nbsp; |
-| <strong>Profile - Info</strong><br><img src="screenshots/profile-info.png" alt="Profile Information" width="300"><br>User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.<br>&nbsp; | <strong>Profile - Skills</strong><br><img src="screenshots/skills.png" alt="Skills List" width="300"><br>List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.<br>&nbsp; | <strong>Projects - All Filters</strong><br><img src="screenshots/all-filters.png" alt="All Filters" width="300"><br>Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.<br>&nbsp; |
-| <strong>Projects - Piscine</strong><br><img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="300"><br>Filtered view displaying only Piscine projects with their completion status and marks.<br>&nbsp; | <strong>Projects - Common Core</strong><br><img src="screenshots/projects-common.png" alt="Common Core Projects" width="300"><br>Filtered view displaying only Common Core projects from the 42 cursus.<br>&nbsp; | <strong>Projects - Advanced</strong><br><img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="300"><br>Filtered view displaying only Advanced Core projects, including hangouts and work experience.<br>&nbsp; |
+<table>
+  <tr>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Start Screen</strong></p>
+      <p><img src="screenshots/start-screen.png" alt="Start Screen" width="300"></p>
+      <p>Initial screen with application logo.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Start - Empty Login</strong></p>
+      <p><img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="300"></p>
+      <p>Login screen with empty search field ready for user input.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Start - Filled Login</strong></p>
+      <p><img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="300"></p>
+      <p>Login screen with filled search field showing entered student login.</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Profile - Info</strong></p>
+      <p><img src="screenshots/profile-info.png" alt="Profile Information" width="300"></p>
+      <p>User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Profile - Skills</strong></p>
+      <p><img src="screenshots/skills.png" alt="Skills List" width="300"></p>
+      <p>List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Projects - All Filters</strong></p>
+      <p><img src="screenshots/all-filters.png" alt="All Filters" width="300"></p>
+      <p>Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Projects - Piscine</strong></p>
+      <p><img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="300"></p>
+      <p>Filtered view displaying only Piscine projects with their completion status and marks.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Projects - Common Core</strong></p>
+      <p><img src="screenshots/projects-common.png" alt="Common Core Projects" width="300"></p>
+      <p>Filtered view displaying only Common Core projects from the 42 cursus.</p>
+    </td>
+    <td align="left" valign="top" width="33%">
+      <p><strong>Projects - Advanced</strong></p>
+      <p><img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="300"></p>
+      <p>Filtered view displaying only Advanced Core projects, including hangouts and work experience.</p>
+    </td>
+  </tr>
+</table>
 
 ## Technology Stack
 
