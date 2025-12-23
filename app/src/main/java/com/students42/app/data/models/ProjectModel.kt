@@ -53,19 +53,7 @@ data class ProjectModel(
 
     val isCommonCore: Boolean
         get() {
-            if (isPiscine || isAdvancedCore) return false
-            
-            if (!cursus.isNullOrEmpty()) {
-                val found = cursus.any { 
-                    val slug = it.slug?.lowercase() ?: ""
-                    val name = it.name?.lowercase() ?: ""
-                    slug == "42cursus" || 
-                    slug == "42" ||
-                    name.contains("common core", ignoreCase = true) ||
-                    name.contains("42 cursus", ignoreCase = true)
-                }
-                if (found) return true
-            }
+            if (isPiscine) return false
             
             val projectSlug = project?.slug?.lowercase() ?: ""
             val projectName = project?.name?.lowercase() ?: ""
@@ -80,7 +68,27 @@ data class ProjectModel(
                 return false
             }
             
-            return true
+            if (!cursus.isNullOrEmpty()) {
+                val hasAdvancedCursus = cursus.any { 
+                    val slug = it.slug?.lowercase() ?: ""
+                    val name = it.name?.lowercase() ?: ""
+                    slug.contains("advanced", ignoreCase = true) ||
+                    name.contains("advanced", ignoreCase = true)
+                }
+                if (hasAdvancedCursus) return false
+                
+                val found = cursus.any { 
+                    val slug = it.slug?.lowercase() ?: ""
+                    val name = it.name?.lowercase() ?: ""
+                    slug == "42cursus" || 
+                    slug == "42" ||
+                    name.contains("common core", ignoreCase = true) ||
+                    name.contains("42 cursus", ignoreCase = true)
+                }
+                if (found) return true
+            }
+            
+            return false
         }
 
     val isCompleted: Boolean

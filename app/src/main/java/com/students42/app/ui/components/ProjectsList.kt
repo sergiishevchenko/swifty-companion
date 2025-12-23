@@ -136,7 +136,7 @@ private fun ProjectCard(project: ProjectModel) {
     val icon: androidx.compose.ui.graphics.vector.ImageVector
     val iconColor: Color
     val statusText: String
-    
+
     when {
         project.isCompleted -> {
             cardColor = Color(0xFF4CAF50)
@@ -221,4 +221,3 @@ private fun ProjectCard(project: ProjectModel) {
         }
     }
 }
-
