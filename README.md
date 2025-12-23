@@ -21,149 +21,59 @@ A native Android application for retrieving and displaying information about 42 
 
 ## Application Preview
 
-<div align="center">
-
-### Start Screen
-
-</div>
-
-<div align="center">
-  <img src="screenshots/start-screen.png" alt="Start Screen" width="50%">
-</div>
-
-<div align="center">
-
-Initial screen with application logo.
-
-</div>
-
-<div align="center">
-
-### Start Page - Empty Login Field
-
-</div>
-
-<div align="center">
-  <img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" width="50%">
-</div>
-
-<div align="center">
-
-Login screen with empty search field ready for user input.
-
-</div>
-
-<div align="center">
-
-### Start Page - Filled Login Field
-
-</div>
-
-<div align="center">
-  <img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" width="50%">
-</div>
-
-<div align="center">
-
-Login screen with filled search field showing entered student login.
-
-</div>
-
-<div align="center">
-
-### Profile - User Information
-
-</div>
-
-<div align="center">
-  <img src="screenshots/profile-info.png" alt="Profile Information" width="50%">
-</div>
-
-<div align="center">
-
-User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.
-
-</div>
-
-<div align="center">
-
-### Profile - Skills List
-
-</div>
-
-<div align="center">
-  <img src="screenshots/skills.png" alt="Skills List" width="50%">
-</div>
-
-<div align="center">
-
-List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.
-
-</div>
-
-<div align="center">
-
-### Profile - Projects with All Filters
-
-</div>
-
-<div align="center">
-  <img src="screenshots/all-filters.png" alt="All Filters" width="50%">
-</div>
-
-<div align="center">
-
-Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.
-
-</div>
-
-<div align="center">
-
-### Profile - Projects Filter (Piscine)
-
-</div>
-
-<div align="center">
-  <img src="screenshots/projects-piscine.png" alt="Piscine Projects" width="50%">
-</div>
-
-<div align="center">
-
-Filtered view displaying only Piscine projects with their completion status and marks.
-
-</div>
-
-<div align="center">
-
-### Profile - Projects Filter (Common Core)
-
-</div>
-
-<div align="center">
-  <img src="screenshots/projects-common.png" alt="Common Core Projects" width="50%">
-</div>
-
-<div align="center">
-
-Filtered view displaying only Common Core projects from the 42 cursus.
-
-</div>
-
-<div align="center">
-
-### Profile - Projects Filter (Advanced Core)
-
-</div>
-
-<div align="center">
-  <img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" width="50%">
-</div>
-
-<div align="center">
-
-Filtered view displaying only Advanced Core projects, including hangouts and work experience.
-
-</div>
+<table style="width:100%; table-layout:fixed;" align="center">
+  <tr>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Start Screen</h4>
+      <img src="screenshots/start-screen.png" alt="Start Screen" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Initial screen with application logo.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Start Page - Empty Login Field</h4>
+      <img src="screenshots/start-page-with-empty-login-enter.png" alt="Start Page Empty Login" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Login screen with empty search field ready for user input.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Start Page - Filled Login Field</h4>
+      <img src="screenshots/start-page-with-filled-in-login-enter.png" alt="Start Page Filled Login" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Login screen with filled search field showing entered student login.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Profile - User Information</h4>
+      <img src="screenshots/profile-info.png" alt="Profile Information" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">User profile card showing profile picture, login, email, level, location, wallet, and evaluations points.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Profile - Skills List</h4>
+      <img src="screenshots/skills.png" alt="Skills List" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">List of user skills sorted by level in descending order, with color-coded level indicators and percentage values.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Profile - Projects with All Filters</h4>
+      <img src="screenshots/all-filters.png" alt="All Filters" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Projects list with all filter chips visible (All, Piscine, Common, Advanced) showing all completed and failed projects.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Projects - Piscine</h4>
+      <img src="screenshots/projects-piscine.png" alt="Piscine Projects" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Filtered view displaying only Piscine projects with their completion status and marks.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Projects - Common Core</h4>
+      <img src="screenshots/projects-common.png" alt="Common Core Projects" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Filtered view displaying only Common Core projects from the 42 cursus.</p>
+    </td>
+    <td width="33%" style="vertical-align: top; text-align: left; padding: 12px;">
+      <h4 style="margin: 0 0 8px 0;">Projects - Advanced</h4>
+      <img src="screenshots/projects-advanced.png" alt="Advanced Core Projects" style="display: block; width: 100%; max-width: 320px;">
+      <p style="margin: 8px 0 0 0;">Filtered view displaying only Advanced Core projects, including hangouts and work experience.</p>
+    </td>
+  </tr>
+</table>
 
 ## Technology Stack
 
