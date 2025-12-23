@@ -409,7 +409,8 @@ The app uses the following 42 Intra API endpoints:
 
 ---
 
-#### `POST /oauth/token` - Get Access Token
+<details>
+<summary><strong>POST /oauth/token</strong> — Get Access Token</summary>
 
 Obtains an access token using the authorization code from OAuth flow.
 
@@ -427,9 +428,10 @@ Obtains an access token using the authorization code from OAuth flow.
 
 **Usage:** Called during initial OAuth authentication flow.
 
----
+</details>
 
-#### `POST /oauth/token` - Refresh Access Token
+<details>
+<summary><strong>POST /oauth/token</strong> — Refresh Access Token</summary>
 
 Refreshes an expired access token using the refresh token.
 
@@ -446,13 +448,12 @@ Refreshes an expired access token using the refresh token.
 
 **Usage:** Automatically called by `AuthInterceptor` when access token expires.
 
----
+</details>
 
 ### User Endpoints
 
----
-
-#### `GET /v2/users/{login}` - Get User Information
+<details>
+<summary><strong>GET /v2/users/{login}</strong> — Get User Information</summary>
 
 Retrieves detailed information about a user by their login (username).
 
@@ -481,9 +482,10 @@ Retrieves detailed information about a user by their login (username).
 
 **Usage:** Called when user searches for a student by login on the login screen.
 
----
+</details>
 
-#### `GET /v2/users/{userId}/skills` - Get User Skills
+<details>
+<summary><strong>GET /v2/users/{userId}/skills</strong> — Get User Skills</summary>
 
 Retrieves all skills for a specific user.
 
@@ -498,9 +500,10 @@ Retrieves all skills for a specific user.
 
 **Usage:** Called to fetch user skills separately if not included in user info response. Used as fallback if skills are not in the main user response.
 
----
+</details>
 
-#### `GET /v2/users/{userId}/projects_users` - Get User Projects
+<details>
+<summary><strong>GET /v2/users/{userId}/projects_users</strong> — Get User Projects</summary>
 
 Retrieves all projects for a specific user.
 
@@ -527,9 +530,10 @@ Retrieves all projects for a specific user.
 
 **Usage:** Called to fetch user projects separately if not included in user info response. Used as fallback if projects are not in the main user response. Projects are then filtered to show only completed and failed projects.
 
----
+</details>
 
-#### `GET /v2/users/{userId}/locations` - Get User Locations
+<details>
+<summary><strong>GET /v2/users/{userId}/locations</strong> — Get User Locations</summary>
 
 Retrieves location history for a specific user.
 
@@ -545,7 +549,7 @@ Retrieves location history for a specific user.
 
 **Usage:** Currently defined in API service but not actively used in the app. Could be used for location history display.
 
----
+</details>
 
 ### Base URL
 All endpoints use the base URL: `https://api.intra.42.fr`
