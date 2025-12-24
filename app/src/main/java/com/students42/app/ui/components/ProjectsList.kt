@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.students42.app.data.models.ProjectModel
 
 enum class ProjectFilter {
-    ALL, PISCINE, COMMON_CORE, ADVANCED_CORE
+    ALL, PISCINE, COMMON_OR_ADVANCED
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +47,7 @@ fun ProjectsList(projects: List<ProjectModel>) {
     val filteredProjects = when (selectedFilter) {
         ProjectFilter.ALL -> projects
         ProjectFilter.PISCINE -> projects.filter { it.isPiscine }
-        ProjectFilter.COMMON_CORE -> projects.filter { it.isCommonCore }
-        ProjectFilter.ADVANCED_CORE -> projects.filter { it.isAdvancedCore }
+        ProjectFilter.COMMON_OR_ADVANCED -> projects.filter { it.isCommonOrAdvanced }
     }
 
     Column(
@@ -103,19 +102,9 @@ fun ProjectsList(projects: List<ProjectModel>) {
                 )
             )
             FilterChip(
-                selected = selectedFilter == ProjectFilter.COMMON_CORE,
-                onClick = { selectedFilter = ProjectFilter.COMMON_CORE },
-                label = { Text("Common") },
-                modifier = Modifier.weight(1f),
-                colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = MaterialTheme.colorScheme.primary,
-                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
-                )
-            )
-            FilterChip(
-                selected = selectedFilter == ProjectFilter.ADVANCED_CORE,
-                onClick = { selectedFilter = ProjectFilter.ADVANCED_CORE },
-                label = { Text("Advanced") },
+                selected = selectedFilter == ProjectFilter.COMMON_OR_ADVANCED,
+                onClick = { selectedFilter = ProjectFilter.COMMON_OR_ADVANCED },
+                label = { Text("42-Cursus") },
                 modifier = Modifier.weight(1f),
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = MaterialTheme.colorScheme.primary,
@@ -138,17 +127,17 @@ private fun ProjectCard(project: ProjectModel) {
     val statusText: String
 
     when {
-        project.isCompleted -> {
-            cardColor = Color(0xFF4CAF50)
-            icon = Icons.Default.CheckCircle
-            iconColor = Color.White
-            statusText = "Completed"
-        }
         project.isFailed -> {
             cardColor = Color(0xFFF44336)
             icon = Icons.Default.Close
             iconColor = Color.White
             statusText = "Failed"
+        }
+        project.isCompleted -> {
+            cardColor = Color(0xFF4CAF50)
+            icon = Icons.Default.CheckCircle
+            iconColor = Color.White
+            statusText = "Completed"
         }
         else -> {
             cardColor = MaterialTheme.colorScheme.surface
