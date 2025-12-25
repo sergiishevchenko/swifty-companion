@@ -56,6 +56,7 @@ fun LoginScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val currentRoute = navController.currentDestination?.route
     var lastNavigatedLogin by remember { mutableStateOf<String?>(null) }
+    var lastShownError by remember { mutableStateOf<String?>(null) }
 
     val oauthLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -96,16 +97,22 @@ fun LoginScreen(
                 }
             }
             is LoginState.Error -> {
-                val result = snackbarHostState.showSnackbar(
-                    message = state.message,
-                    actionLabel = if (state.retryAction != null) context.getString(R.string.retry) else null
-                )
-                if (result == SnackbarResult.ActionPerformed) {
-                    state.retryAction?.invoke()
+                if (lastShownError != state.message) {
+                    lastShownError = state.message
+                    val result = snackbarHostState.showSnackbar(
+                        message = state.message,
+                        actionLabel = if (state.retryAction != null) context.getString(R.string.retry) else null
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        state.retryAction?.invoke()
+                    }
                 }
             }
             else -> {
                 lastNavigatedLogin = null
+                if (loginState !is LoginState.Error) {
+                    lastShownError = null
+                }
             }
         }
     }

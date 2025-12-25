@@ -30,8 +30,13 @@ class AuthInterceptor(
                 val isExpired = tokenRepository.isTokenExpired()
                 
                 if (isExpired && tokenValue != null) {
-                    refreshTokenIfNeeded()
-                    tokenRepository.getTokenSync()
+                    val refreshed = refreshTokenIfNeeded()
+                    if (refreshed) {
+                        tokenRepository.getTokenSync()
+                    } else {
+                        tokenRepository.clearToken()
+                        null
+                    }
                 } else {
                     tokenValue
                 }
