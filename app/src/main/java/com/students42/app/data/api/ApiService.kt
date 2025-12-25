@@ -1,14 +1,7 @@
 package com.students42.app.data.api
 
-import com.students42.app.data.models.ProjectModel
-import com.students42.app.data.models.SkillModel
-import com.students42.app.data.models.TokenResponse
-import com.students42.app.data.models.UserModel
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import com.students42.app.data.models.*
+import retrofit2.http.*
 
 interface ApiService {
     @GET("v2/users/{login}")
@@ -21,7 +14,7 @@ interface ApiService {
     suspend fun getUserProjects(@Path("userId") userId: Int): List<ProjectModel>
 
     @GET("v2/users/{userId}/locations")
-    suspend fun getUserLocations(@Path("userId") userId: Int): List<com.students42.app.data.models.LocationModel>
+    suspend fun getUserLocations(@Path("userId") userId: Int): List<LocationModel>
 
     @FormUrlEncoded
     @POST("oauth/token")
