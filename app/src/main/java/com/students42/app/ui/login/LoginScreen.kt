@@ -57,6 +57,7 @@ fun LoginScreen(
     val currentRoute = navController.currentDestination?.route
     var lastNavigatedLogin by remember { mutableStateOf<String?>(null) }
     var lastShownError by remember { mutableStateOf<String?>(null) }
+    var processedInitialUri by remember { mutableStateOf<Uri?>(null) }
 
     val oauthLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -72,12 +73,15 @@ fun LoginScreen(
         }
     }
 
-    LaunchedEffect(initialUri) {
+    LaunchedEffect(initialUri, loginState) {
         initialUri?.let { uri ->
             if (uri.scheme == "students42" && uri.host == "oauth" && uri.path == "/callback") {
-                val code = uri.getQueryParameter("code")
-                code?.let { authCode ->
-                    viewModel.handleOAuthCallback(authCode)
+                if (processedInitialUri != uri && loginState is LoginState.NoToken) {
+                    processedInitialUri = uri
+                    val code = uri.getQueryParameter("code")
+                    code?.let { authCode ->
+                        viewModel.handleOAuthCallback(authCode)
+                    }
                 }
             }
         }

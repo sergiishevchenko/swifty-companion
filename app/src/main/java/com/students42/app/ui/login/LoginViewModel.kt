@@ -34,6 +34,7 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
     private var lastSearchLogin: String? = null
+    private val processedCodes = mutableSetOf<String>()
 
     init {
         checkToken()
@@ -115,6 +116,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun handleOAuthCallback(code: String) {
+        if (processedCodes.contains(code)) {
+            return
+        }
+        processedCodes.add(code)
+        
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
 
@@ -124,6 +130,7 @@ class LoginViewModel @Inject constructor(
                     checkToken()
                 }
                 is Result.Error -> {
+                    processedCodes.remove(code)
                     val errorMessage = ErrorHandler.handleError(context, result.exception)
                     _loginState.value = LoginState.Error(
                         errorMessage,
