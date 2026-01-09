@@ -164,153 +164,70 @@ fun ProfileScreen(
                     )
                 }
                 is ProfileState.Success -> {
-                    if (isLandscape && isTablet) {
-                        Column(
-                            modifier = Modifier.fillMaxSize()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp, top = 8.dp),
+                            contentAlignment = Alignment.Center
                         ) {
+                            Text(
+                                text = "Profile",
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    .padding(horizontal = 24.dp, vertical = 12.dp)
+                            )
+                        }
+                        state.user.imageUrl?.let { imageUrl ->
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(bottom = 20.dp, top = 8.dp),
+                                    .padding(vertical = 20.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = "Profile",
-                                    style = MaterialTheme.typography.headlineMedium,
-                                    color = MaterialTheme.colorScheme.primary,
+                                Box(
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(12.dp))
+                                        .fillMaxWidth(if (isTablet) 0.25f else 0.3f)
+                                        .clip(CircleShape)
                                         .background(
-                                            MaterialTheme.colorScheme.surface,
-                                            RoundedCornerShape(12.dp)
+                                            MaterialTheme.colorScheme.primaryContainer,
+                                            CircleShape
                                         )
-                                        .padding(horizontal = 24.dp, vertical = 12.dp)
-                                )
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .weight(1f)
-                            ) {
-                                Column(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(16.dp)
-                                        .verticalScroll(rememberScrollState())
+                                        .padding(4.dp)
                                 ) {
-                                    state.user.imageUrl?.let { imageUrl ->
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(bottom = 20.dp),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxWidth(0.4f)
-                                                    .clip(CircleShape)
-                                                    .background(
-                                                        MaterialTheme.colorScheme.primaryContainer,
-                                                        CircleShape
-                                                    )
-                                                    .padding(4.dp)
-                                            ) {
-                                                AsyncImage(
-                                                    model = ImageRequest.Builder(context)
-                                                        .data(imageUrl)
-                                                        .crossfade(true)
-                                                        .build(),
-                                                    contentDescription = "Profile picture",
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .clip(CircleShape),
-                                                    contentScale = ContentScale.Crop
-                                                )
-                                            }
-                                        }
-                                    }
-                                    UserInfoCard(user = state.user)
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(16.dp)
-                                        .verticalScroll(rememberScrollState())
-                                ) {
-                                    if (state.skills.isNotEmpty()) {
-                                        SkillsList(skills = state.skills)
-                                    }
-                                    if (state.projects.isNotEmpty()) {
-                                        ProjectsList(projects = state.projects)
-                                    }
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(context)
+                                            .data(imageUrl)
+                                            .crossfade(true)
+                                            .build(),
+                                        contentDescription = "Profile picture",
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clip(CircleShape),
+                                        contentScale = ContentScale.Crop
+                                    )
                                 }
                             }
                         }
-                    } else {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 20.dp, top = 8.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "Profile",
-                                    style = MaterialTheme.typography.headlineMedium,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(12.dp))
-                                        .background(
-                                            MaterialTheme.colorScheme.surface,
-                                            RoundedCornerShape(12.dp)
-                                        )
-                                        .padding(horizontal = 24.dp, vertical = 12.dp)
-                                )
-                            }
-                            state.user.imageUrl?.let { imageUrl ->
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 20.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth(if (isTablet) 0.25f else 0.3f)
-                                            .clip(CircleShape)
-                                            .background(
-                                                MaterialTheme.colorScheme.primaryContainer,
-                                                CircleShape
-                                            )
-                                            .padding(4.dp)
-                                    ) {
-                                        AsyncImage(
-                                            model = ImageRequest.Builder(context)
-                                                .data(imageUrl)
-                                                .crossfade(true)
-                                                .build(),
-                                            contentDescription = "Profile picture",
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clip(CircleShape),
-                                            contentScale = ContentScale.Crop
-                                        )
-                                    }
-                                }
-                            }
 
-                            UserInfoCard(user = state.user)
+                        UserInfoCard(user = state.user)
 
-                            if (state.skills.isNotEmpty()) {
-                                SkillsList(skills = state.skills)
-                            }
+                        if (state.skills.isNotEmpty()) {
+                            SkillsList(skills = state.skills)
+                        }
 
-                            if (state.projects.isNotEmpty()) {
-                                ProjectsList(projects = state.projects)
-                            }
+                        if (state.projects.isNotEmpty()) {
+                            ProjectsList(projects = state.projects)
                         }
                     }
                 }
