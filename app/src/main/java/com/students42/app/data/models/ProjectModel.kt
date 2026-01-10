@@ -38,82 +38,33 @@ data class ProjectModel(
 
     val isFailed: Boolean
         get() {
-            val result = when {
-                validated == false -> {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: validated=false -> FAILED")
-                    } catch (e: Exception) {
-                    }
-                    true
-                }
-                status == "failed" -> {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: status=failed -> FAILED")
-                    } catch (e: Exception) {
-                    }
-                    true
-                }
-                finalMark != null && finalMark < 0 -> {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: finalMark=$finalMark < 0 -> FAILED")
-                    } catch (e: Exception) {
-                    }
-                    true
-                }
-                marked == true && finalMark != null && finalMark < 0 -> {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: marked=true, finalMark=$finalMark < 0 -> FAILED")
-                    } catch (e: Exception) {
-                    }
-                    true
-                }
+            return when {
+                validated == false -> true
+                status == "failed" -> true
+                finalMark != null && finalMark < 0 -> true
+                marked == true && finalMark != null && finalMark < 0 -> true
                 else -> false
             }
-            return result
         }
 
     val isCompleted: Boolean
         get() {
             if (isFailed) {
-                try {
-                    android.util.Log.d("ProjectModel", "Project ${name}: isFailed=true -> NOT COMPLETED")
-                } catch (e: Exception) {
-                }
                 return false
             }
             if (validated == true && finalMark != null && finalMark >= 0) {
-                try {
-                    android.util.Log.d("ProjectModel", "Project ${name}: validated=true, finalMark=$finalMark >= 0 -> COMPLETED")
-                } catch (e: Exception) {
-                }
                 return true
             }
             if (status == "finished" || status == "completed") {
                 if (validated == true) {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: status=$status, validated=true -> COMPLETED")
-                    } catch (e: Exception) {
-                    }
                     return true
                 }
                 if (validated == null && finalMark != null && finalMark >= 0) {
-                    try {
-                        android.util.Log.d("ProjectModel", "Project ${name}: status=$status, validated=null, finalMark=$finalMark >= 0 -> COMPLETED")
-                    } catch (e: Exception) {
-                    }
                     return true
                 }
             }
             if (marked == true && finalMark != null && finalMark >= 0) {
-                try {
-                    android.util.Log.d("ProjectModel", "Project ${name}: marked=true, finalMark=$finalMark >= 0 -> COMPLETED")
-                } catch (e: Exception) {
-                }
                 return true
-            }
-            try {
-                android.util.Log.d("ProjectModel", "Project ${name}: no conditions met -> NOT COMPLETED")
-            } catch (e: Exception) {
             }
             return false
         }

@@ -126,19 +126,6 @@ class ProfileViewModel @Inject constructor(
                     projectsWithSameName.firstOrNull()
                 }
 
-            android.util.Log.d("ProfileViewModel", "=== ALL PROJECTS (${allProjects.size}) ===")
-            allProjects.forEach { project ->
-                android.util.Log.d("ProfileViewModel", "Project: ${project.name}, " +
-                    "Status: ${project.status}, " +
-                    "Validated: ${project.validated}, " +
-                    "FinalMark: ${project.finalMark}, " +
-                    "IsPiscine: ${project.isPiscine}, " +
-                    "IsCommonOrAdvanced: ${project.isCommonOrAdvanced}, " +
-                    "IsCompleted: ${project.isCompleted}, " +
-                    "IsFailed: ${project.isFailed}, " +
-                    "Cursus: ${project.cursus?.map { "${it.slug} (${it.name})" }?.joinToString(", ") ?: "null"}")
-            }
-
             val projects = allProjects.filter { project ->
                 project.isCompleted || project.isFailed
             }
