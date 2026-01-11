@@ -1,5 +1,6 @@
 package com.students42.app.data.repositories
 
+import android.util.Log
 import com.students42.app.data.api.ApiService
 import com.students42.app.data.models.ProjectModel
 import com.students42.app.data.models.SkillModel
@@ -8,6 +9,7 @@ import com.students42.app.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.withContext
 
 class UserRepository(
@@ -26,26 +28,26 @@ class UserRepository(
     }
 
     fun getUserSkills(userId: Int): Flow<Result<List<SkillModel>>> = flow {
+        Log.d("UserRepository", "=== getUserSkills Flow started for userId=$userId ===")
         emit(Result.Loading)
-        try {
-            val skills = withContext(Dispatchers.IO) {
-                apiService.getUserSkills(userId)
-            }
-            emit(Result.Success(skills))
-        } catch (e: Exception) {
-            emit(Result.Error(e))
+        Log.d("UserRepository", "Making API call getUserSkills for userId=$userId")
+        val skills = withContext(Dispatchers.IO) {
+            apiService.getUserSkills(userId)
         }
+        Log.d("UserRepository", "getUserSkills API call successful, skills count=${skills.size}")
+        emit(Result.Success(skills))
+    }.catch { e ->
+        Log.e("UserRepository", "getUserSkills API call failed for userId=$userId: ${e.message}", e)
+        emit(Result.Error(e))
     }
 
     fun getUserProjects(userId: Int): Flow<Result<List<ProjectModel>>> = flow {
         emit(Result.Loading)
-        try {
-            val projects = withContext(Dispatchers.IO) {
-                apiService.getUserProjects(userId)
-            }
-            emit(Result.Success(projects))
-        } catch (e: Exception) {
-            emit(Result.Error(e))
+        val projects = withContext(Dispatchers.IO) {
+            apiService.getUserProjects(userId)
         }
+        emit(Result.Success(projects))
+    }.catch { e ->
+        emit(Result.Error(e))
     }
 }
