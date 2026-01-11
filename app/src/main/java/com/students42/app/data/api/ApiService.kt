@@ -7,9 +7,6 @@ interface ApiService {
     @GET("v2/users/{login}")
     suspend fun getUserInfo(@Path("login") login: String): UserModel
 
-    @GET("v2/users/{userId}/skills")
-    suspend fun getUserSkills(@Path("userId") userId: Int): List<SkillModel>
-
     @GET("v2/users/{userId}/projects_users")
     suspend fun getUserProjects(@Path("userId") userId: Int): List<ProjectModel>
 
