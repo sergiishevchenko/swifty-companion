@@ -12,12 +12,15 @@ import com.students42.app.utils.ErrorHandler
 import com.students42.app.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import android.util.Log
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +34,7 @@ class ProfileViewModel @Inject constructor(
     val profileState: StateFlow<ProfileState> = _profileState.asStateFlow()
 
     private var lastLogin: String? = null
+    private var loadUserDataJob: Job? = null
 
     fun loadUserProfileByLogin(login: String) {
         lastLogin = login
@@ -69,26 +73,19 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadUserData(userId: Int, user: com.students42.app.data.models.UserModel) {
-        viewModelScope.launch {
-            val skillsResult = async {
-                try {
-                    userRepository.getUserSkills(userId).first { it is Result.Success || it is Result.Error }
-                } catch (e: Exception) {
-                    Result.Error(e) as Result<List<SkillModel>>
-                }
-            }
-
+        loadUserDataJob?.cancel()
+        Log.d("ProfileViewModel", "=== loadUserData called for userId=$userId ===")
+        loadUserDataJob = viewModelScope.launch {
             val projectsResult = async {
                 try {
-                    userRepository.getUserProjects(userId).first { it is Result.Success || it is Result.Error }
+                    Log.d("ProfileViewModel", "Starting getUserProjects for userId=$userId")
+                    val result = userRepository.getUserProjects(userId).drop(1).first()
+                    Log.d("ProfileViewModel", "getUserProjects completed: ${result.javaClass.simpleName}")
+                    result
                 } catch (e: Exception) {
+                    Log.e("ProfileViewModel", "getUserProjects exception: ${e.message}", e)
                     Result.Error(e) as Result<List<ProjectModel>>
                 }
-            }
-
-            val skillsFromApi = when (val result = skillsResult.await()) {
-                is Result.Success -> result.data
-                else -> emptyList()
             }
 
             val projectsFromApi = when (val result = projectsResult.await()) {
@@ -108,15 +105,7 @@ class ProfileViewModel @Inject constructor(
                     .maxByOrNull { it.endAt ?: "" }
             }
 
-            val skillsFromCurrentCursus = currentCursus?.skills ?: emptyList()
-
-            val apiSkillsMap = skillsFromApi.associateBy { it.name.lowercase().trim() }
-            val cursusSkillsMap = skillsFromCurrentCursus.associateBy { it.name.lowercase().trim() }
-            
-            val allSkillNames = (apiSkillsMap.keys + cursusSkillsMap.keys).toSet()
-            val skills = allSkillNames.mapNotNull { skillName ->
-                apiSkillsMap[skillName] ?: cursusSkillsMap[skillName]
-            }
+            val skills = currentCursus?.skills ?: emptyList()
 
             val allProjects = (projectsFromApi + projectsFromUser)
                 .distinctBy { it.id }
