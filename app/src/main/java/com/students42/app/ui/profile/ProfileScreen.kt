@@ -197,7 +197,7 @@ fun ProfileScreen(
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .fillMaxWidth(if (isTablet) 0.25f else 0.3f)
+                                        .size(if (isTablet) 200.dp else 150.dp)
                                         .clip(CircleShape)
                                         .background(
                                             MaterialTheme.colorScheme.primaryContainer,
@@ -212,7 +212,7 @@ fun ProfileScreen(
                                             .build(),
                                         contentDescription = "Profile picture",
                                         modifier = Modifier
-                                            .fillMaxWidth()
+                                            .fillMaxSize()
                                             .clip(CircleShape),
                                         contentScale = ContentScale.Crop
                                     )
