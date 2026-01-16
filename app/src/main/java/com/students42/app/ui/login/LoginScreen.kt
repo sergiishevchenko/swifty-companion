@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,7 +55,7 @@ fun LoginScreen(
 ) {
     val loginState by viewModel.loginState.collectAsState()
     val context = LocalContext.current
-    var loginText by remember { mutableStateOf("") }
+    var loginText by rememberSaveable { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     val currentRoute = navController.currentDestination?.route
     var lastNavigatedLogin by remember { mutableStateOf<String?>(null) }
@@ -138,24 +141,28 @@ fun LoginScreen(
         ) {
             val maxWidth = this.maxWidth
             val padding = if (maxWidth < 600.dp) 32.dp else 48.dp
+            val scrollState = rememberScrollState()
+            val logoSize = if (isLandscape) 120.dp else 200.dp
+            val spacing = if (isLandscape) 16.dp else 24.dp
             Column(
                 modifier = Modifier
                     .then(if (isLandscape) Modifier.fillMaxWidth(0.6f) else Modifier.fillMaxWidth())
+                    .verticalScroll(scrollState)
                     .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                verticalArrangement = Arrangement.spacedBy(spacing)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(200.dp)
-                        .padding(bottom = 16.dp),
+                        .size(logoSize)
+                        .padding(bottom = if (isLandscape) 8.dp else 16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = R.mipmap.ic_launcher),
                         contentDescription = "App Logo",
                         modifier = Modifier
-                            .size(200.dp)
+                            .size(logoSize)
                             .border(
                                 width = 1.dp,
                                 color = MaterialTheme.colorScheme.outline,
