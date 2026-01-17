@@ -57,7 +57,6 @@ fun LoginScreen(
     val context = LocalContext.current
     var loginText by rememberSaveable { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
-    val currentRoute = navController.currentDestination?.route
     var lastNavigatedLogin by remember { mutableStateOf<String?>(null) }
     var lastShownError by remember { mutableStateOf<String?>(null) }
     var processedInitialUri by remember { mutableStateOf<Uri?>(null) }
@@ -176,7 +175,7 @@ fun LoginScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
-                
+
                 OutlinedTextField(
                     value = loginText,
                     onValueChange = { loginText = it },

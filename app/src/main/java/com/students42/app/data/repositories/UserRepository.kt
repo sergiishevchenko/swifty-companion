@@ -1,6 +1,5 @@
 package com.students42.app.data.repositories
 
-import android.util.Log
 import com.students42.app.data.api.ApiService
 import com.students42.app.data.models.ProjectModel
 import com.students42.app.data.models.UserModel
