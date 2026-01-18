@@ -4,9 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.students42.app.R
 import com.students42.app.data.models.ProjectModel
-import com.students42.app.data.models.SkillModel
 import com.students42.app.data.repositories.UserRepository
 import com.students42.app.utils.ErrorHandler
 import com.students42.app.utils.Result
@@ -14,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -99,7 +96,7 @@ class ProfileViewModel @Inject constructor(
                 val activeCursus = cursusList
                     .filter { it.endAt == null }
                     .maxByOrNull { it.level ?: 0.0 }
-                
+
                 activeCursus ?: cursusList
                     .filter { it.endAt != null }
                     .maxByOrNull { it.endAt ?: "" }
